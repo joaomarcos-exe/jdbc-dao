@@ -1,17 +1,44 @@
+import model.dao.DaoFactory;
+import model.dao.SellerDao;
+import model.entities.Department;
+import model.entities.Seller;
+
+import java.util.Date;
+import java.util.List;
+
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        // Press Alt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        SellerDao sellerDao = DaoFactory.createSellerDao();
 
-        // Press Shift+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
+        Seller seller = sellerDao.findById(3);
+        System.out.println(seller);
+        Department department = new Department(2, null);
+        List<Seller> list = sellerDao.findByDepartment(department);
+        for(Seller obj : list){
+            System.out.println(obj);
 
-            // Press Shift+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+8.
-            System.out.println("i = " + i);
         }
+
+
+        list = sellerDao.findAll();
+        for(Seller obj : list){
+            System.out.println(obj);
+
+        }
+        System.out.println("TESTE4");
+        Seller newSeller = new Seller(null, "Greg", "teste@gmail.com", new Date(), 4000.0, department);
+        sellerDao.insert(newSeller);;
+        System.out.println(newSeller.getId());
+
+        System.out.println("TESTE5");
+       seller = sellerDao.findById(1);
+       seller.setName("teste23");
+       sellerDao.update(seller);
+
+        System.out.println("TESTE6");
+        sellerDao.deleteById(1);
+
     }
 }
